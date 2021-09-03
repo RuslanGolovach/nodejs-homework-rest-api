@@ -1,86 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-const contactsOperations = require('../../model/index')
-const { contactSchema } = require('../../validation')
+const ctrl = require('../../controllers')
 
-router.get('/', async (_, res, next) => {
-  try {
-    const contacts = await contactsOperations.listContacts()
-    res.json({ contacts })
-  } catch (error) {
-    next(error)
-  }
-})
+router.get('/', ctrl.listContacts)
 
-router.get('/:contactId', async (req, res, next) => {
-  try {
-    const { contactId } = req.params
+router.get('/:contactId', ctrl.getContactById)
 
-    const contacts = await contactsOperations.getContactById(contactId)
+router.post('/', ctrl.addContact)
 
-    if (!contacts) {
-      return res.status(404).json({ message: 'Not found' })
-    }
+router.delete('/:contactId', ctrl.removeContact)
 
-    res.json({ contacts })
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.post('/', async (req, res, next) => {
-  try {
-    const { error } = contactSchema.validate(req.body)
-
-    if (error) {
-      return res.status(400).json({ message: 'missing required name field' })
-    }
-
-    const contacts = await contactsOperations.addContact(req.body)
-
-    res.status(201).json({ contacts })
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.delete('/:contactId', async (req, res, next) => {
-  try {
-    const { contactId } = req.params
-
-    const contacts = await contactsOperations.removeContact(contactId)
-
-    if (!contacts) {
-      return res.status(404).json({ message: 'Not found' })
-    }
-
-    res.status(200).json({ message: 'contact deleted' })
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.put('/:contactId', async (req, res, next) => {
-  try {
-    const { error } = contactSchema.validate(req.body)
-
-    if (error) {
-      return res.status(400).json({ message: 'missing fields' })
-    }
-
-    const { contactId } = req.params
-
-    const contacts = await contactsOperations.updateContact(contactId, req.body)
-
-    if (!contacts) {
-      return res.status(404).json({ message: 'Not found' })
-    }
-
-    res.status(200).json({ contacts })
-  } catch (error) {
-    next(error)
-  }
-})
+router.put('/:contactId', ctrl.updateContact)
 
 module.exports = router
