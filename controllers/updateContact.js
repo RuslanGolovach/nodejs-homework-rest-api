@@ -4,13 +4,19 @@ const updateContact = async (req, res, next) => {
   try {
     const { contactId } = req.params
 
-    const updateContact = await Contact.findByIdAndUpdate(contactId, req.body)
+    const newUpdateContact = await Contact.findByIdAndUpdate(
+      contactId,
+      req.body,
+      {
+        new: true,
+      },
+    )
 
-    if (!updateContact) {
+    if (!newUpdateContact) {
       return res.status(404).json({ message: 'Not found' })
     }
 
-    res.status(200).json({ updateContact })
+    res.status(200).json({ newUpdateContact })
   } catch (error) {
     next(error)
   }

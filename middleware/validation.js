@@ -1,5 +1,4 @@
 const validation = schema => {
-  console.log(schema)
   const validFunc = (req, res, next) => {
     const { error } = schema.validate(req.body)
     if (error) {
