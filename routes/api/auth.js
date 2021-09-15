@@ -5,6 +5,7 @@ const {
   validation,
   controllerWrapper,
   authenticate,
+  uploadAvatar,
 } = require('../../middleware')
 
 const { auth: ctrl } = require('../../controllers')
@@ -31,6 +32,12 @@ router.get(
   '/current',
   controllerWrapper(authenticate),
   controllerWrapper(ctrl.current),
+)
+
+router.patch(
+  '/:contactId',
+  uploadAvatar.single('avatar'),
+  controllerWrapper(ctrl.avatar),
 )
 
 module.exports = router
