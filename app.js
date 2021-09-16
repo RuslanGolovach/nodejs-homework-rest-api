@@ -25,5 +25,3 @@ app.use((err, _, res, __) => {
 })
 
 module.exports = app
-
-// DB_HOST = mongodb+srv://Ruslan:yn04VOkResDzdqDd@cluster0.cwrhk.mongodb.net/db-contacts?retryWrites=true&w=majority
