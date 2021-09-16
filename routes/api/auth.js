@@ -35,9 +35,10 @@ router.get(
 )
 
 router.patch(
-  '/:contactId',
+  '/avatars',
+  controllerWrapper(authenticate),
   uploadAvatar.single('avatar'),
-  controllerWrapper(ctrl.avatar),
+  controllerWrapper(ctrl.updateAvatar),
 )
 
 module.exports = router

@@ -25,7 +25,7 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
-    avatarUrl: {
+    avatarURL: {
       type: String,
       default: '',
     },
@@ -46,7 +46,7 @@ const userJoiSchema = Joi.object({
   password: Joi.string().min(8).required(),
   subscription: Joi.string().valid('starter', 'pro', 'business'),
   token: Joi.string(),
-  avatarUrl: Joi.string(),
+  avatarURL: Joi.string(),
 })
 
 const User = model('user', userSchema)
