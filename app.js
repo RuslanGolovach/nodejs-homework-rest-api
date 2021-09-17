@@ -11,6 +11,7 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json())
+app.use(express.static('public'))
 
 app.use('/api/contacts', contactsRouter)
 app.use('/api/users', authRouter)
@@ -24,5 +25,3 @@ app.use((err, _, res, __) => {
 })
 
 module.exports = app
-
-// DB_HOST = mongodb+srv://Ruslan:yn04VOkResDzdqDd@cluster0.cwrhk.mongodb.net/db-contacts?retryWrites=true&w=majority
